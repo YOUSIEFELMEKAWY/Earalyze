@@ -1,7 +1,8 @@
-import 'package:earalyze/presentation/resources/strings_manager.dart';
+import 'package:earalyze/presentation/onboarding/view/onboarding_view.dart';
+import 'package:earalyze/presentation/resources/constants_manager.dart';
 import 'package:earalyze/presentation/splash/widgets/sliding_text.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import '../../resources/assets_manager.dart';
 
 class SplashViewBody extends StatefulWidget {
@@ -20,21 +21,15 @@ class _SplashViewBodyState extends State<SplashViewBody>
   void initState() {
     super.initState();
 
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    );
-    slidingAnimation =
-        Tween<Offset>(begin: const Offset(0, 10), end: const Offset(0, 9))
-            .animate(animationController);
-    animationController.forward();
+    initSlidingAnimation();
+    navigateToOnboarding();
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     animationController.dispose();
-
   }
 
   @override
@@ -48,6 +43,23 @@ class _SplashViewBodyState extends State<SplashViewBody>
       ],
     );
   }
+
+  void initSlidingAnimation() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    slidingAnimation =
+        Tween<Offset>(begin: const Offset(0, 10), end: const Offset(0, 9))
+            .animate(animationController);
+    animationController.forward();
+  }
+
+  void navigateToOnboarding() {
+    Future.delayed(const Duration(seconds: AppConstants.splashDelay), () {
+      Get.off(() => const OnboardingView(),
+          transition: Transition.fade,
+          duration: const Duration(seconds: AppConstants.transitionDuration));
+    });
+  }
 }
-
-
