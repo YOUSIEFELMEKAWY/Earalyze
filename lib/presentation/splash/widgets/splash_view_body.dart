@@ -31,11 +31,10 @@ class _SplashViewBodyState extends State<SplashViewBody>
     final prefs = await SharedPreferences.getInstance();
     final onboardingCompleted = prefs.getBool('onboardingCompleted') ?? false;
 
-    // Navigate based on onboarding status
     if (onboardingCompleted) {
-      navigateToLogin(); // Navigate to home
+      navigateToLogin();
     } else {
-      navigateToOnboarding(); // Navigate to onboarding
+      navigateToOnboarding();
     }
   }
 

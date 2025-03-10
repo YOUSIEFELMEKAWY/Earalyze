@@ -1,6 +1,5 @@
 import 'package:earalyze/presentation/resources/strings_manager.dart';
 import 'package:flutter/material.dart';
-
 import '../login/login_view.dart';
 import '../onboarding1/view/onboarding_view.dart';
 import '../splash/splash_view.dart';

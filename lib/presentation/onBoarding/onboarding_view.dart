@@ -1,164 +1,81 @@
-import 'package:earalyze/presentation/onBoarding/widgets/onboarding_items.dart';
-import 'package:earalyze/presentation/resources/assets_manager.dart';
-import 'package:earalyze/presentation/resources/color_manager.dart';
-import 'package:earalyze/presentation/resources/constants_manager.dart';
-import 'package:earalyze/presentation/resources/strings_manager.dart';
-import 'package:earalyze/presentation/resources/values_manager.dart';
+import 'package:earalyze/presentation/onBoarding/widgets/app_logo.dart';
+import 'package:earalyze/presentation/resources/routes_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:earalyze/presentation/onBoarding/widgets/onboarding_items.dart';
+import 'package:earalyze/presentation/resources/color_manager.dart';
+import 'package:earalyze/presentation/resources/values_manager.dart';
+import '../resources/constants_manager.dart';
+import 'cubits/onboarding_cubit.dart';
+import 'cubits/onboarding_states.dart';
+import 'widgets/onboarding_footer.dart';
 
-import '../resources/routes_manager.dart';
-
-class OnboardingView extends StatefulWidget {
+class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
 
   @override
-  State<OnboardingView> createState() => _OnboardingViewState();
-}
-
-class _OnboardingViewState extends State<OnboardingView> {
-  final controller = OnBoardingItems();
-  final pageController = PageController();
-  bool isLastPage = false;
-  @override
   Widget build(BuildContext context) {
+    final controller = OnBoardingItems();
     var width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: ColorManager.white,
-      body: PageView.builder(
-        onPageChanged: (index) => setState(() {
-          isLastPage = controller.items.length -1 == index;
-        }),
-        itemCount: controller.items.length,
-        controller: pageController,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              const SizedBox(
-                height: AppSize.s60,
-              ),
-              SizedBox(
-                width: width * 0.48,
-                child: Image.asset(
-                  ImageAssets.splashLogo,
-                ),
-              ),
-              Image.asset(
-                controller.items[index].image,
-              ),
-              const Spacer(),
-              Container(
-                height: width * 0.6,
-                width: width,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(AppSize.s40),
-                    topLeft: Radius.circular(AppSize.s40),
-                  ),
-                  border: Border.all(
-                    color: ColorManager.grey1, // Outline color
-                    width: 1, // Outline thickness
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+    return BlocProvider(
+      create: (context) => OnboardingCubit(controller.items.length),
+      child: BlocBuilder<OnboardingCubit, OnboardingState>(
+        builder: (context, state) {
+          final onboardingCubit = context.read<OnboardingCubit>();
+          final isLastPage = state is OnboardingPageUpdated &&
+              state.currentPageIndex == controller.items.length - 1;
+
+          return Scaffold(
+            backgroundColor: ColorManager.white,
+            body: PageView.builder(
+              onPageChanged: (index) => onboardingCubit.updatePageIndex(index),
+              itemCount: controller.items.length,
+              controller: onboardingCubit.pageController,
+              itemBuilder: (context, index) {
+                return Column(
                   children: [
-                    SmoothPageIndicator(
-                      controller: pageController,
-                      count: controller.items.length,
-                      effect: WormEffect(
-                          activeDotColor: ColorManager.primary,
-                          dotWidth: AppSize.s12,
-                          dotHeight: AppSize.s12),
-                    ),
-                    SizedBox(
-                      width: width * 0.56,
-                      child: Text(
-                        controller.items[index].title,
-                        style: Theme.of(context).textTheme.headlineLarge,
-                        textAlign: TextAlign.center,
+                    const SizedBox(height: AppSize.s60),
+                    AppLogo(width: width),
+                    //onBoarding image
+                    Image.asset(controller.items[index].image),
+                    const Spacer(),
+                    OnboardingFooter(
+                      pageController: onboardingCubit.pageController,
+                      totalPages: controller.items.length,
+                      isLastPage: isLastPage,
+                      onSkip: () =>
+                          onboardingCubit.pageController.animateToPage(
+                        controller.items.length - 1,
+                        duration: const Duration(
+                            milliseconds:
+                                AppConstants.animateToFinalPageDuration),
+                        curve: Curves.easeInOut,
                       ),
-                    ),
-                    SizedBox(
-                      width: width * 0.9,
-                      child: Text(
-                        controller.items[index].description,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        TextButton(
-                          onPressed: () => pageController.animateToPage(
-                            controller.items.length - 1,
+                      onNext: () {
+                        if (isLastPage) {
+                          Navigator.pushReplacementNamed(
+                              context, Routes.loginRoute);
+                          onboardingCubit.completeOnboarding();
+                        } else {
+                          onboardingCubit.pageController.nextPage(
                             duration: const Duration(
-                                milliseconds: AppConstants
-                                    .animateToFinalPageDuration), // Adjust the speed
-                            curve: Curves.easeInOut,
-                          ),
-                          child: Text(
-                            AppStrings.skip,
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                        ),
-                        SizedBox(
-                          width: width * 0.3,
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorManager
-                                .primary, // Background color of the button
-                            foregroundColor: ColorManager.white,
-                          ),
-                          onPressed: () => pageController.nextPage(
-                              duration: const Duration(
-                                  milliseconds:
-                                      AppConstants.animateToNextPageDuration),
-                              curve: Curves.easeIn),
-                          child: Row(
-                            children: [
-                              isLastPage? getStarted() : Text(
-                                AppStrings.next,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const Icon(Icons.arrow_forward)
-                            ],
-                          ),
-                        ),
-                      ],
+                                milliseconds:
+                                    AppConstants.animateToNextPageDuration),
+                            curve: Curves.easeIn,
+                          );
+                        }
+                      },
+                      title: controller.items[index].title,
+                      description: controller.items[index].description,
                     ),
                   ],
-                ),
-              ),
-            ],
+                );
+              },
+            ),
           );
         },
       ),
     );
-  }
-  Widget getStarted()
-  {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: ColorManager
-            .primary,
-        foregroundColor: ColorManager.white,
-      ),
-      onPressed: ()
-      {
-        completeOnboarding();
-        Navigator.pushReplacementNamed(context, Routes.loginRoute);
-      },
-      child: Text(
-        AppStrings.getStarted,
-        style: Theme.of(context).textTheme.titleMedium,
-      ),
-    );
-  }
-  Future<void> completeOnboarding() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('onboardingCompleted', true); // Save the flag
   }
 }

@@ -39,6 +39,8 @@ dependencies:
   get: ^4.7.2
   smooth_page_indicator: ^1.2.1
   shared_preferences: ^2.5.2
+  flutter_bloc: ^9.1.0
+
 
 
 dev_dependencies:
