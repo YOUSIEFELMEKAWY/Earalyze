@@ -19,7 +19,7 @@ class SidingText extends StatelessWidget {
         child: Center(
           child: Text(
             AppStrings.appDesc,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
       ),

@@ -38,3 +38,12 @@ class Authentication {
 
   Authentication(this.customer, this.contacts);
 }
+
+class OnBoardingInfo {
+  String title;
+  String description;
+  String image;
+
+  OnBoardingInfo(
+      {required this.title, required this.description, required this.image});
+}

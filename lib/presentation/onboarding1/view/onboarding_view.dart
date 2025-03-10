@@ -11,14 +11,14 @@ import '../../resources/strings_manager.dart';
 import '../../resources/values_manager.dart';
 import '../viewmodel/onboarding_viewmodel.dart';
 
-class OnboardingView extends StatefulWidget {
-  const OnboardingView({super.key});
+class OnboardingView1 extends StatefulWidget {
+  const OnboardingView1({super.key});
 
   @override
-  State<OnboardingView> createState() => _OnboardingViewState();
+  State<OnboardingView1> createState() => _OnboardingView1State();
 }
 
-class _OnboardingViewState extends State<OnboardingView> {
+class _OnboardingView1State extends State<OnboardingView1> {
   final PageController _pageController = PageController();
   final OnBoardingViewModel _viewModel = OnBoardingViewModel();
 

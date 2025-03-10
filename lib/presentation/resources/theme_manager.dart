@@ -55,15 +55,15 @@ ThemeData getAppTheme() {
 
     textTheme: TextTheme(
       headlineLarge:
-          getSemiBoldStyle(color: ColorManager.white, fontSize: AppSize.s20),
-      headlineMedium: getRegularStyle(color: ColorManager.darkGray, fontSize: AppSize.s17),
+          getBoldStyle(color: ColorManager.primary, fontSize: AppSize.s22),
+      headlineMedium: getBoldStyle(color: ColorManager.primary, fontSize: AppSize.s17),
       displayLarge:
           getSemiBoldStyle(color: ColorManager.darkGray, fontSize: AppSize.s16),
       titleMedium:
-          getMediumStyle(color: ColorManager.primary, fontSize: AppSize.s16),
-      bodyLarge: getRegularStyle(color: ColorManager.grey1),
+          getMediumStyle(color: ColorManager.white, fontSize: AppSize.s16),
+      bodyLarge: getLightStyle(color: ColorManager.white),
       bodySmall: getRegularStyle(color: ColorManager.gray),
-      bodyMedium: getSemiBoldStyle(color: Colors.white)
+      bodyMedium: getRegularStyle(color: ColorManager.primary)
     ),
 
     //input decoration theme(text form field)

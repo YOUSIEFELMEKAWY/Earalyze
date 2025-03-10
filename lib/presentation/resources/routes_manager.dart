@@ -2,7 +2,7 @@ import 'package:earalyze/presentation/resources/strings_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../login/login_view.dart';
-import '../onboarding/view/onboarding_view.dart';
+import '../onboarding1/view/onboarding_view.dart';
 import '../splash/splash_view.dart';
 
 class Routes {
@@ -21,7 +21,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const LoginView());
       case Routes.onboardingRoute:
         return MaterialPageRoute(
-            builder: (context) => const OnboardingView());
+            builder: (context) => const OnboardingView1());
       default:
         return unDefinedRoute();
     }
