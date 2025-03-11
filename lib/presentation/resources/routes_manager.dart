@@ -1,39 +1,58 @@
+import 'package:earalyze/presentation/resources/constants_manager.dart';
 import 'package:earalyze/presentation/resources/strings_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import '../login/login_view.dart';
 import '../onboarding1/view/onboarding_view.dart';
+import '../signup/signup_view.dart';
 import '../splash/splash_view.dart';
 
 class Routes {
   static const String splashRoute = '/';
   static const String loginRoute = '/login';
+  static const String signupRoute = '/signup';
   static const String onboardingRoute = '/onboarding';
   static const String mainRoute = '/main';
 }
 
 class RouteGenerator {
-  static Route<dynamic> getRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case Routes.splashRoute:
-        return MaterialPageRoute(builder: (context) => const SplashView());
-      case Routes.loginRoute:
-        return MaterialPageRoute(builder: (context) => const LoginView());
-      case Routes.onboardingRoute:
-        return MaterialPageRoute(
-            builder: (context) => const OnboardingView1());
-      default:
-        return unDefinedRoute();
-    }
-  }
+  static List<GetPage> getPages = [
+    GetPage(
+      name: Routes.splashRoute,
+      page: () => const SplashView(),
+    ),
+    GetPage(
+      name: Routes.loginRoute,
+      page: () => const LoginView(),
+      transition: Transition.rightToLeft,
+      transitionDuration:
+          const Duration(milliseconds: AppConstants.transitionDuration),
+    ),
+    GetPage(
+      name: Routes.signupRoute,
+      page: () => const SignupView(),
+      transition: Transition.rightToLeft,
+      transitionDuration:
+          const Duration(milliseconds: AppConstants.transitionDuration),
+    ),
+    GetPage(
+      name: Routes.onboardingRoute,
+      page: () => const OnboardingView1(),
+      transition: Transition.leftToRight,
+      transitionDuration:
+          const Duration(milliseconds: AppConstants.transitionDuration),
+    ),
+  ];
+}
 
-  static Route<dynamic> unDefinedRoute() {
-    return MaterialPageRoute(
-      builder: (context) => Scaffold(
-        appBar: AppBar(
-          title: const Text(AppStrings.noRoute),
-        ),
-        body: const Center(child: Text(AppStrings.noRoute)),
+Route<dynamic> unDefinedRoute() {
+  return MaterialPageRoute(
+    builder: (context) => Scaffold(
+      appBar: AppBar(
+        title: const Text(AppStrings.noRoute),
       ),
-    );
-  }
+      body: const Center(child: Text(AppStrings.noRoute)),
+    ),
+  );
 }

@@ -17,6 +17,7 @@ class AppStrings
   static const facebook = 'Facebook';
   static const google = 'Google';
   static const dontHaveAnAccount = "Don't have an account? ";
+  static const alreadyHaveAnAccount = "Already have an account? ";
   static const signUp = "Sign up";
   static const onboardingTitle1 = 'Someone with your ear anytime, anywhere!';
   static const onboardingTitle2 = 'Find your diagnosis easily';

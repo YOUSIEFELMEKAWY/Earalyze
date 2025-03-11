@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../presentation/resources/routes_manager.dart';
 import '../presentation/resources/theme_manager.dart';
 
@@ -22,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      onGenerateRoute: RouteGenerator.getRoute,
+      getPages: RouteGenerator.getPages,
       initialRoute: Routes.splashRoute,
       theme: getAppTheme(),
     );

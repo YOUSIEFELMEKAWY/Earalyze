@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../onBoarding/onboarding_view.dart';
 import '../../resources/assets_manager.dart';
+import '../../resources/routes_manager.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -69,17 +70,13 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
   void navigateToOnboarding() {
     Future.delayed(const Duration(seconds: AppConstants.splashDelay), () {
-      Get.off(() => const OnboardingView(),
-          transition: Transition.fade,
-          duration: const Duration(seconds: AppConstants.transitionDuration));
+      Get.offNamed(Routes.onboardingRoute);
     });
   }
 
   void navigateToLogin() {
     Future.delayed(const Duration(seconds: AppConstants.splashDelay), () {
-      Get.off(() => const LoginView(),
-          transition: Transition.fade,
-          duration: const Duration(seconds: AppConstants.transitionDuration));
+      Get.offNamed(Routes.loginRoute);
     });
   }
 }

@@ -10,12 +10,10 @@ import 'package:earalyze/presentation/resources/strings_manager.dart';
 import 'package:earalyze/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../resources/routes_manager.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+class SignupView extends StatelessWidget {
+  const SignupView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +58,7 @@ class LoginView extends StatelessWidget {
                     SizedBox(height: width * 0.06),
                     CustomElevatedButton(
                       onPressed: () {},
-                      name: AppStrings.signIn,
+                      name: AppStrings.signUp,
                       width: width,
                     ),
                     SizedBox(height: width * 0.08),
@@ -90,10 +88,10 @@ class LoginView extends StatelessWidget {
             FooterForLoginAndSignUp(
               width: width,
               onTap: () {
-                Get.offNamed(Routes.signupRoute);
+                Get.offNamed(Routes.loginRoute);
               },
-              actionText: AppStrings.signUp,
-              questionText: AppStrings.dontHaveAnAccount,
+              actionText: AppStrings.signIn,
+              questionText: AppStrings.alreadyHaveAnAccount,
             ),
           ],
         ),
