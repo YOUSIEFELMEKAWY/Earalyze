@@ -54,7 +54,6 @@ class SignupView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    ForgetPasswordButton(onPressed: () {}),
                     SizedBox(height: width * 0.06),
                     CustomElevatedButton(
                       onPressed: () {},
