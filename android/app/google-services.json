@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1011527282166",
+    "project_id": "earalyze",
+    "storage_bucket": "earalyze.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011527282166:android:6286a8767eb8da56d56bd7",
+        "android_client_info": {
+          "package_name": "com.example.earalyze"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYmSqpClV8FKExckLZHOcDxUWLDRxWJq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

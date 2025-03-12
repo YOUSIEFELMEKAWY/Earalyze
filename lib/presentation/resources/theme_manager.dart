@@ -3,7 +3,7 @@ import 'package:earalyze/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'color_manager.dart';
-
+import 'font_manager.dart';
 
 ThemeData getAppTheme() {
   return ThemeData(
@@ -55,18 +55,24 @@ ThemeData getAppTheme() {
 
     textTheme: TextTheme(
       headlineLarge:
-          getBoldStyle(color: ColorManager.primary, fontSize: AppSize.s22),
-      headlineMedium: getBoldStyle(color: ColorManager.primary, fontSize: AppSize.s17),
-      displayLarge:
-          getRegularStyle(color: ColorManager.black, fontSize: AppSize.s40),
+          getBoldStyle(color: ColorManager.primary, fontSize: FontSize.s22),
+      headlineMedium:
+          getBoldStyle(color: ColorManager.primary, fontSize: FontSize.s17),
+      displayLarge: getRegularStyle(
+          color: ColorManager.primaryDark, fontSize: FontSize.s35),
       titleMedium:
-          getMediumStyle(color: ColorManager.white, fontSize: AppSize.s16),
+          getMediumStyle(color: ColorManager.white, fontSize: FontSize.s16),
       bodyLarge: getLightStyle(color: ColorManager.white),
       bodySmall: getRegularStyle(color: ColorManager.black),
       bodyMedium: getRegularStyle(color: ColorManager.primary),
-      displayMedium: getBoldStyle(color: ColorManager.white , fontSize: AppSize.s18),
-      displaySmall: getRegularStyle(color: ColorManager.white , fontSize: AppSize.s18),
+      displayMedium:
+          getBoldStyle(color: ColorManager.white, fontSize: FontSize.s18),
+      displaySmall:
+          getRegularStyle(color: ColorManager.white, fontSize: FontSize.s18),
+      headlineSmall: getBoldStyle(color: ColorManager.primary, fontSize: FontSize.s20),
+      labelMedium: getLightStyle(color: ColorManager.primaryDark , fontSize: FontSize.s26)
     ),
+
 
     //input decoration theme(text form field)
 

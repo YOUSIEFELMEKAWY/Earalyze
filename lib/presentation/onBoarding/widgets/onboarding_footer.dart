@@ -76,7 +76,7 @@ class OnboardingFooter extends StatelessWidget {
                 onPressed: onSkip,
                 child: Text(
                   AppStrings.skip,
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               SizedBox(width: width * 0.3),

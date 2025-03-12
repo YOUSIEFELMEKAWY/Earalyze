@@ -1,10 +1,8 @@
-import 'package:earalyze/presentation/login/login_view.dart';
 import 'package:earalyze/presentation/resources/constants_manager.dart';
 import 'package:earalyze/presentation/splash/widgets/sliding_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../onBoarding/onboarding_view.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/routes_manager.dart';
 

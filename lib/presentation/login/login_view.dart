@@ -10,8 +10,7 @@ import 'package:earalyze/presentation/resources/strings_manager.dart';
 import 'package:earalyze/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
+import '../common_widgets/custom_text_widget.dart';
 import '../resources/routes_manager.dart';
 
 class LoginView extends StatelessWidget {
@@ -20,6 +19,8 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
+    String email;
+    String password;
     return Scaffold(
       backgroundColor: ColorManager.white,
       resizeToAvoidBottomInset: true,
@@ -37,33 +38,62 @@ class LoginView extends StatelessWidget {
                       AppStrings.welcome,
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
+
                     SizedBox(height: width * 0.04),
                     Padding(
                       padding: const EdgeInsets.all(AppSize.s16),
                       child: Column(
                         children: [
-                          const CustomTextField(
+                          CustomTextWidget(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            name: AppStrings.signIn,
+                            textStyle: Theme.of(context).textTheme.displayLarge,
+                          ),
+                          SizedBox(height: width * 0.02),
+                          CustomTextWidget(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            name: AppStrings.email,
+                            textStyle: Theme.of(context).textTheme.labelMedium,
+                          ),
+                          SizedBox(height: width * 0.02,),
+                           CustomTextField(
                             hintText: AppStrings.enterYourEmail,
                             labelText: AppStrings.email,
+                            isPassword: false,
+                              onChanged: (data)
+                              {
+                                email = data;
+                              }
                           ),
                           SizedBox(
                             height: width * 0.05,
                           ),
-                          const CustomTextField(
+                          CustomTextWidget(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            name: AppStrings.password,
+                            textStyle: Theme.of(context).textTheme.labelMedium,
+                          ),
+                          SizedBox(height: width * 0.02,),
+                          CustomTextField(
                             hintText: AppStrings.enterYourPassword,
                             labelText: AppStrings.password,
+                            isPassword: true,
+                              onChanged: (data)
+                              {
+                                password = data;
+                              }
                           ),
                         ],
                       ),
                     ),
                     ForgetPasswordButton(onPressed: () {}),
-                    SizedBox(height: width * 0.06),
+                    SizedBox(height: width * 0.001),
                     CustomElevatedButton(
                       onPressed: () {},
                       name: AppStrings.signIn,
                       width: width,
                     ),
-                    SizedBox(height: width * 0.08),
+                    SizedBox(height: width * 0.07),
                     const OrDivider(),
                     SizedBox(height: width * 0.07),
                     Row(

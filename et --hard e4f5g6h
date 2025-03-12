@@ -1,0 +1,9 @@
+[33mce4a381[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m refactor: remove forget password button from signup viev
+[33me76ffb4[m refactor: remove forget password button from signup viev
+[33me1c83a9[m feat: complete signup view design and handle keyboard visibility
+[33ma259af7[m refactor: apply clean code principles to login view and extract widgets
+[33m6d21fe3[m ui: complete login design without logic
+[33m8daf469[m refactor: implement Cubit in onBoarding flow
+[33m021721c[m design specific onboarding view
+[33m556a8df[m finish splash screen
+[33m8692620[m setup project and add splash screen

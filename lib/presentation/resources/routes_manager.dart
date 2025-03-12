@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import '../login/login_view.dart';
-import '../onboarding1/view/onboarding_view.dart';
+import '../onBoarding/onboarding_view.dart';
 import '../signup/signup_view.dart';
 import '../splash/splash_view.dart';
 
@@ -38,7 +38,7 @@ class RouteGenerator {
     ),
     GetPage(
       name: Routes.onboardingRoute,
-      page: () => const OnboardingView1(),
+      page: () => const OnboardingView(),
       transition: Transition.leftToRight,
       transitionDuration:
           const Duration(milliseconds: AppConstants.transitionDuration),
