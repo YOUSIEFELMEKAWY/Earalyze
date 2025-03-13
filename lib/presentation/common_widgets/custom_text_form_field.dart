@@ -2,15 +2,14 @@ import 'package:earalyze/presentation/common_widgets/cubits/show_password/show_p
 import 'package:earalyze/presentation/common_widgets/cubits/show_password/show_password_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../resources/color_manager.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final String labelText;
   final bool isPassword;
   final Function(String)? onChanged;
-  const CustomTextField(
+  const CustomTextFormField(
       {super.key,
         required this.onChanged,
       required this.hintText,
@@ -22,7 +21,13 @@ class CustomTextField extends StatelessWidget {
     return BlocProvider<ShowPasswordCubit>(
       create: (context) => ShowPasswordCubit(),
       child: BlocBuilder<ShowPasswordCubit,ShowPasswordState>(
-        builder: (context, state) =>  TextField(
+        builder: (context, state) =>  TextFormField(
+          validator: (data)
+          {
+            if (data!.isEmpty) {
+              return 'This field is required';
+            }
+          },
           onChanged: onChanged,
           obscureText: isPassword ? state.defaultShowPassword : false,
           style: Theme.of(context).textTheme.bodySmall,
