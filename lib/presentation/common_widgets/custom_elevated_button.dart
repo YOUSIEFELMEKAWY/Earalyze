@@ -7,11 +7,12 @@ class CustomElevatedButton extends StatelessWidget {
   final double width;
   final VoidCallback onPressed;
   final String name;
+  final bool isLoading;
   const CustomElevatedButton(
       {super.key,
       required this.width,
       required this.onPressed,
-      required this.name});
+      required this.name, required this.isLoading});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,8 @@ class CustomElevatedButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             vertical: AppSize.s16, horizontal: width * 0.39),
       ),
-      child: Text(
+      child:
+      isLoading ? CircularProgressIndicator(color: ColorManager.white,) : Text(
         name,
         style: Theme.of(context).textTheme.displayMedium,
       ),

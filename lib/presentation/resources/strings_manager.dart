@@ -7,7 +7,7 @@ class AppStrings
   static const next = 'Next';
   static const email = 'Email';
   static const password = 'Password';
-  static const rePassword = 'Re-Password';
+  static const rePassword = 'Confirm Password';
   static const getStarted = 'Get Started';
   static const welcome = 'Welcome!';
   static const enterYourEmail = 'Enter Your Email';

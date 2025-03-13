@@ -1,3 +1,4 @@
+import 'package:earalyze/presentation/home/home_view.dart';
 import 'package:earalyze/presentation/resources/constants_manager.dart';
 import 'package:earalyze/presentation/resources/strings_manager.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class Routes {
   static const String signupRoute = '/signup';
   static const String onboardingRoute = '/onboarding';
   static const String mainRoute = '/main';
+  static const String homeRoute = '/home';
 }
 
 class RouteGenerator {
@@ -42,6 +44,13 @@ class RouteGenerator {
       transition: Transition.leftToRight,
       transitionDuration:
           const Duration(milliseconds: AppConstants.transitionDuration),
+    ),
+    GetPage(
+      name: Routes.homeRoute,
+      page: () => const HomeView(),
+      transition: Transition.leftToRight,
+      transitionDuration:
+      const Duration(milliseconds: AppConstants.transitionDuration),
     ),
   ];
 }
