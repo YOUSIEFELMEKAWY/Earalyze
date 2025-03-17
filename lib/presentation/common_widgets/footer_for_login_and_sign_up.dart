@@ -1,3 +1,4 @@
+import 'package:earalyze/presentation/resources/media_query_values.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -5,13 +6,11 @@ import '../resources/color_manager.dart';
 import '../resources/values_manager.dart';
 
 class FooterForLoginAndSignUp extends StatelessWidget {
-  final double width;
   final String questionText;
   final String actionText;
   final VoidCallback onTap;
   const FooterForLoginAndSignUp(
       {super.key,
-      required this.width,
       required this.questionText,
       required this.actionText,
       required this.onTap});
@@ -19,7 +18,7 @@ class FooterForLoginAndSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: width * 0.15,
+      height: context.width * 0.15,
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       decoration: BoxDecoration(
         color: ColorManager.primaryDark,

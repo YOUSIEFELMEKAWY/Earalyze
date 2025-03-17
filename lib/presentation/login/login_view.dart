@@ -22,7 +22,6 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     String? email;
     String? password;
     GlobalKey<FormState> formKey = GlobalKey();
@@ -39,14 +38,14 @@ class LoginView extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        SizedBox(height: width * 0.04),
+                        SizedBox(height: context.height * 0.02),
                         Center(child: Image.asset(ImageAssets.appLogo)),
-                        SizedBox(height: width * 0.04),
+                        SizedBox(height: context.height * 0.005),
                         Text(
                           AppStrings.welcome,
                           style: Theme.of(context).textTheme.displayLarge,
                         ),
-                        SizedBox(height: width * 0.04),
+                        SizedBox(height: context.height * 0.005),
                         Padding(
                           padding: const EdgeInsets.all(AppSize.s16),
                           child: Column(
@@ -63,7 +62,7 @@ class LoginView extends StatelessWidget {
                                           .textTheme
                                           .displayLarge,
                                     ),
-                                    SizedBox(height: width * 0.02),
+                                    SizedBox(height: context.height * 0.01),
                                     CustomTextWidget(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
@@ -73,7 +72,7 @@ class LoginView extends StatelessWidget {
                                           .labelMedium,
                                     ),
                                     SizedBox(
-                                      height: width * 0.02,
+                                      height: context.height * 0.01,
                                     ),
                                     CustomTextFormField(
                                         hintText: AppStrings.enterYourEmail,
@@ -83,7 +82,7 @@ class LoginView extends StatelessWidget {
                                           email = data;
                                         }),
                                     SizedBox(
-                                      height: width * 0.05,
+                                      height: context.height * 0.025,
                                     ),
                                     CustomTextWidget(
                                       mainAxisAlignment:
@@ -94,7 +93,7 @@ class LoginView extends StatelessWidget {
                                           .labelMedium,
                                     ),
                                     SizedBox(
-                                      height: width * 0.02,
+                                      height: context.height * 0.01,
                                     ),
                                     CustomTextFormField(
                                         hintText: AppStrings.enterYourPassword,
@@ -110,7 +109,7 @@ class LoginView extends StatelessWidget {
                           ),
                         ),
                         ForgetPasswordButton(onPressed: () {}),
-                        SizedBox(height: width * 0.001),
+                        SizedBox(height: context.height * 0.0005),
                         CustomElevatedButton(
                           isLoading: context
                               .read<LoginCubit>().isLoading,
@@ -123,16 +122,16 @@ class LoginView extends StatelessWidget {
                             }
                             },
                           name: AppStrings.signIn,
-                          width: width,
+                          width: context.width,
                         ),
-                        SizedBox(height: width * 0.07),
+                        SizedBox(height: context.height * 0.025),
                         const OrDivider(),
-                        SizedBox(height: width * 0.07),
+                        SizedBox(height: context.height * 0.025),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             CustomElevatedIconButton(
-                              width: width,
+                              width: context.width,
                               name: AppStrings.google,
                               onPressed: ()
                               {
@@ -141,9 +140,12 @@ class LoginView extends StatelessWidget {
                               imageName: ImageAssets.googleIcon,
                             ),
                             CustomElevatedIconButton(
-                              width: width,
+                              width: context.width,
                               name: AppStrings.facebook,
-                              onPressed: () {},
+                              onPressed: ()
+                              {
+                                FirebaseServices().signInWithFacebook(context);
+                              },
                               imageName: ImageAssets.facebookIcon,
                             ),
                           ],
@@ -153,7 +155,6 @@ class LoginView extends StatelessWidget {
                   ),
                 ),
                 FooterForLoginAndSignUp(
-                  width: width,
                   onTap: () {
                     Get.offNamed(Routes.signupRoute);
                   },

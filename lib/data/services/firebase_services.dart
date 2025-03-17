@@ -1,22 +1,34 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../presentation/common_widgets/custom_snack_bar.dart';
 import '../../presentation/resources/routes_manager.dart';
 
 class FirebaseServices {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-
+  // Sign up with email and password
   Future<void> signupUser(context, String email, String password) async {
     try {
-      UserCredential user = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential user = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
       await user.user!.sendEmailVerification();
 
-      customSnackBar(context, "Sign up successful! Please check your email to verify your account.",
-          backgroundColor: Colors.lightGreen, icon: Icons.check);
+      customSnackBar(
+        context,
+        "Sign up successful! Please check your email to verify your account.",
+        backgroundColor: Colors.lightGreen,
+        icon: Icons.check,
+      );
+
+      // Navigate to login screen after successful sign-up
+      Get.offNamed(Routes.loginRoute);
     } on FirebaseAuthException catch (ex) {
       switch (ex.code) {
         case 'weak-password':
@@ -41,28 +53,40 @@ class FirebaseServices {
     }
   }
 
-
+  // Sign in with email and password
   Future<void> signInUser(context, String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
       if (userCredential.user!.emailVerified) {
-        customSnackBar(context, "Sign in Success",
-            backgroundColor: Colors.lightGreen, icon: Icons.check);
-        Get.offNamed(Routes.homeRoute); // Navigate to home screen
+        customSnackBar(
+          context,
+          "Sign in Success",
+          backgroundColor: Colors.lightGreen,
+          icon: Icons.check,
+        );
+        Get.offNamed(Routes.homeRoute,arguments: userCredential.user); // Navigate to home screen
       } else {
-        await FirebaseAuth.instance.signOut();
-        customSnackBar(context, "Please verify your email to sign in.",
-            backgroundColor: Colors.orange, icon: Icons.warning);
-
+        await _auth.signOut();
+        customSnackBar(
+          context,
+          "Please verify your email to sign in.",
+          backgroundColor: Colors.orange,
+          icon: Icons.warning,
+        );
 
         await userCredential.user!.sendEmailVerification();
-        customSnackBar(context, "A new verification email has been sent.",
-            backgroundColor: Colors.blue, icon: Icons.email);
+        customSnackBar(
+          context,
+          "A new verification email has been sent.",
+          backgroundColor: Colors.blue,
+          icon: Icons.email,
+        );
       }
     } on FirebaseAuthException catch (ex) {
-
       switch (ex.code) {
         case 'user-not-found':
           customSnackBar(context, "No user found for that email.");
@@ -88,37 +112,100 @@ class FirebaseServices {
       customSnackBar(context, "An unexpected error occurred: $ex");
     }
   }
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> signInWithGoogle(BuildContext context) async {
+  // Sign in with Google
+  Future<void> signInWithGoogle(context) async {
     try {
-      // Trigger the Google Sign-In flow
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       if (googleUser == null) {
-        // User canceled the sign-in process
+        customSnackBar(
+          context,
+          "Google sign-in canceled.",
+          backgroundColor: Colors.orange,
+          icon: Icons.warning,
+        );
         return;
       }
 
-      // Obtain the auth details from the request
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-      // Create a new credential
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      // Sign in to Firebase with the Google credential
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
-
-      // Successfully signed in
-      print("Signed in with Google: ${userCredential.user!.email}");
+      customSnackBar(
+        context,
+        "Signed in with Google: ${userCredential.user!.email}",
+        backgroundColor: Colors.lightGreen,
+        icon: Icons.check,
+      );
+      Get.offNamed(Routes.homeRoute,arguments: userCredential.user); // Navigate to home screen
     } on FirebaseAuthException catch (ex) {
-      print("Firebase Auth Error: ${ex.message}");
+      customSnackBar(
+        context,
+        "Firebase Auth Error: ${ex.message}",
+        backgroundColor: Colors.red,
+        icon: Icons.error,
+      );
     } catch (ex) {
-      print("Error: $ex");
+      customSnackBar(
+        context,
+        "Error: $ex",
+        backgroundColor: Colors.red,
+        icon: Icons.error,
+      );
     }
   }
+
+  // Sign in with Facebook
+  Future<void> signInWithFacebook(context) async {
+    try {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      if (loginResult.accessToken == null) {
+        customSnackBar(
+          context,
+          "Facebook login failed: Access token is null",
+          backgroundColor: Colors.red,
+          icon: Icons.error,
+        );
+        return;
+      }
+
+      final OAuthCredential facebookAuthCredential =
+      FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+
+      final UserCredential userCredential =
+      await _auth.signInWithCredential(facebookAuthCredential);
+      customSnackBar(
+        context,
+        "Signed in with Facebook",
+        backgroundColor: Colors.lightGreen,
+        icon: Icons.check,
+      );
+      Get.offNamed(Routes.homeRoute,arguments: userCredential.user); // Navigate to home screen
+    } catch (e) {
+      customSnackBar(
+        context,
+        "Error during Facebook login: $e",
+        backgroundColor: Colors.red,
+        icon: Icons.error,
+      );
+    }
+  }
+  // logout
+  Future<void> logOut(context) async {
+    await FirebaseAuth.instance.signOut();
+    customSnackBar(
+      context,
+      "Log Out Successfully",
+      backgroundColor: Colors.lightGreen,
+      icon: Icons.check,
+    );
+    Get.offNamed(Routes.loginRoute); // Navigate to home screen
+  }
+
 }

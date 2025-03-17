@@ -12,6 +12,7 @@ import 'package:earalyze/presentation/signup/cubits/signup_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import '../../data/services/firebase_services.dart';
 import '../common_widgets/custom_snack_bar.dart';
 import '../common_widgets/custom_text_widget.dart';
 import '../resources/routes_manager.dart';
@@ -21,7 +22,6 @@ class SignupView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     String? email;
     String? password;
     String? confirmPassword;
@@ -39,7 +39,7 @@ class SignupView extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        SizedBox(height: width * 0.04),
+                        SizedBox(height: context.height * 0.02),
                         Center(child: Image.asset(ImageAssets.appLogo)),
                         Text(
                           AppStrings.welcome,
@@ -55,7 +55,7 @@ class SignupView extends StatelessWidget {
                                 textStyle: Theme.of(context).textTheme.displayLarge,
                               ),
                               SizedBox(
-                                height: width * 0.01,
+                                height: context.height * 0.005,
                               ),
                               CustomTextWidget(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -63,7 +63,7 @@ class SignupView extends StatelessWidget {
                                 textStyle: Theme.of(context).textTheme.labelMedium,
                               ),
                               SizedBox(
-                                height: width * 0.01,
+                                height: context.height * 0.005,
                               ),
                               Form(
                                 key: formKey,
@@ -78,7 +78,7 @@ class SignupView extends StatelessWidget {
                                         },
                                       ),
                                       SizedBox(
-                                        height: width * 0.02,
+                                        height: context.height * 0.01,
                                       ),
                                       CustomTextWidget(
                                         mainAxisAlignment: MainAxisAlignment.start,
@@ -86,7 +86,7 @@ class SignupView extends StatelessWidget {
                                         textStyle: Theme.of(context).textTheme.labelMedium,
                                       ),
                                       SizedBox(
-                                        height: width * 0.01,
+                                        height: context.height * 0.005,
                                       ),
                                       CustomTextFormField(
                                         hintText: AppStrings.enterYourPassword,
@@ -97,19 +97,19 @@ class SignupView extends StatelessWidget {
                                         },
                                       ),
                                       SizedBox(
-                                        height: width * 0.01,
+                                        height: context.height * 0.005,
                                       ),
                                       CustomTextWidget(
                                         mainAxisAlignment: MainAxisAlignment.start,
-                                        name: AppStrings.rePassword,
+                                        name: AppStrings.confirmPassword,
                                         textStyle: Theme.of(context).textTheme.labelMedium,
                                       ),
                                       SizedBox(
-                                        height: width * 0.01,
+                                        height: context.height * 0.005,
                                       ),
                                       CustomTextFormField(
-                                          hintText: AppStrings.reEnterYourPassword,
-                                          labelText: AppStrings.rePassword,
+                                          hintText: AppStrings.confirmPassword,
+                                          labelText: AppStrings.password,
                                           isPassword: true,
                                           onChanged: (data) {
                                             confirmPassword = data;
@@ -120,7 +120,7 @@ class SignupView extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: width * 0.02),
+                        SizedBox(height: context.height * 0.01),
                         CustomElevatedButton(
                           isLoading: context.read<SignupCubit>().isLoading,
                           onPressed: () async {
@@ -139,24 +139,30 @@ class SignupView extends StatelessWidget {
                              }
                           },
                           name: AppStrings.signUp,
-                          width: width,
+                          width: context.width,
                         ),
-                        SizedBox(height: width * 0.07),
+                        SizedBox(height: context.height * 0.025),
                         const OrDivider(),
-                        SizedBox(height: width * 0.07),
+                        SizedBox(height: context.height * 0.025),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             CustomElevatedIconButton(
-                              width: width,
+                              width: context.width,
                               name: AppStrings.google,
-                              onPressed: () {},
+                              onPressed: ()
+                              {
+                                FirebaseServices().signInWithGoogle(context);
+                              },
                               imageName: ImageAssets.googleIcon,
                             ),
                             CustomElevatedIconButton(
-                              width: width,
+                              width: context.width,
                               name: AppStrings.facebook,
-                              onPressed: () {},
+                              onPressed: ()
+                              {
+                                FirebaseServices().signInWithFacebook(context);
+                              },
                               imageName: ImageAssets.facebookIcon,
                             ),
                           ],
@@ -166,7 +172,6 @@ class SignupView extends StatelessWidget {
                   ),
                 ),
                 FooterForLoginAndSignUp(
-                  width: width,
                   onTap: () {
                     Get.offNamed(Routes.loginRoute);
                   },

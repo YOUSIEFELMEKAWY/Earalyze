@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       getPages: RouteGenerator.getPages,
       initialRoute: Routes.splashRoute,
-      theme: getAppTheme(),
+      theme: getAppTheme(context),
     );
   }
 }

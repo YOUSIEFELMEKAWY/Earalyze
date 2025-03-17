@@ -27,14 +27,14 @@ class RouteGenerator {
     GetPage(
       name: Routes.loginRoute,
       page: () => const LoginView(),
-      transition: Transition.rightToLeft,
+      transition: Transition.cupertino,
       transitionDuration:
           const Duration(milliseconds: AppConstants.transitionDuration),
     ),
     GetPage(
       name: Routes.signupRoute,
       page: () => const SignupView(),
-      transition: Transition.rightToLeft,
+      transition: Transition.cupertino,
       transitionDuration:
           const Duration(milliseconds: AppConstants.transitionDuration),
     ),

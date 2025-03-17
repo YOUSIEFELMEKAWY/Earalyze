@@ -1,3 +1,4 @@
+import 'package:earalyze/presentation/resources/media_query_values.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:earalyze/presentation/resources/color_manager.dart';
@@ -26,11 +27,10 @@ class OnboardingFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
 
     return Container(
-      height: width * 0.6,
-      width: width,
+      height: context.width * 0.6,
+      width: context.width,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(AppSize.s40),
@@ -49,12 +49,12 @@ class OnboardingFooter extends StatelessWidget {
             count: totalPages,
             effect: WormEffect(
               activeDotColor: ColorManager.primary,
-              dotWidth: AppSize.s12,
-              dotHeight: AppSize.s12,
+              dotWidth: context.width *0.03,
+              dotHeight: context.width *0.03,
             ),
           ),
           SizedBox(
-            width: width * 0.56,
+            width: context.width * 0.56,
             child: Text(
               title,
               style: Theme.of(context).textTheme.headlineLarge,
@@ -62,9 +62,10 @@ class OnboardingFooter extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: width * 0.9,
+            width: context.width * 0.9,
             child: Text(
               description,
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
@@ -79,7 +80,7 @@ class OnboardingFooter extends StatelessWidget {
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
-              SizedBox(width: width * 0.3),
+              SizedBox(width: context.width * 0.3),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ColorManager.primary,

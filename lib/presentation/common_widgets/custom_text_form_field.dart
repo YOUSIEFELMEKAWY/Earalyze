@@ -9,21 +9,22 @@ class CustomTextFormField extends StatelessWidget {
   final String labelText;
   final bool isPassword;
   final Function(String)? onChanged;
-  const CustomTextFormField(
-      {super.key,
-        required this.onChanged,
-      required this.hintText,
-      required this.labelText,
-      required this.isPassword,});
+
+  const CustomTextFormField({
+    super.key,
+    required this.onChanged,
+    required this.hintText,
+    required this.labelText,
+    required this.isPassword,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ShowPasswordCubit>(
       create: (context) => ShowPasswordCubit(),
-      child: BlocBuilder<ShowPasswordCubit,ShowPasswordState>(
-        builder: (context, state) =>  TextFormField(
-          validator: (data)
-          {
+      child: BlocBuilder<ShowPasswordCubit, ShowPasswordState>(
+        builder: (context, state) => TextFormField(
+          validator: (data) {
             if (data!.isEmpty) {
               return 'This field is required';
             }
@@ -36,7 +37,7 @@ class CustomTextFormField extends StatelessWidget {
             labelText: labelText, // Add label here
             labelStyle: TextStyle(color: ColorManager.primary),
             contentPadding:
-                const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+            const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
               borderSide: const BorderSide(color: Colors.grey, width: 1.5),
@@ -45,17 +46,34 @@ class CustomTextFormField extends StatelessWidget {
               borderRadius: BorderRadius.circular(30.0),
               borderSide: BorderSide(color: ColorManager.primary, width: 2.0),
             ),
+            errorStyle: const TextStyle(
+              color: Colors.redAccent,    // Customize the error text color
+              fontSize: 14,               // Customize the font size
+              fontWeight: FontWeight.bold, // Make it bold
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: const BorderSide(color: Colors.redAccent, width: 2.0),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: const BorderSide(color: Colors.redAccent, width: 2.0),
+            ),
             hintText: hintText,
             hintStyle: TextStyle(color: ColorManager.grey1),
-            suffixIcon: isPassword ? IconButton(
+            suffixIcon: isPassword
+                ? IconButton(
               icon: Icon(
-                state.defaultShowPassword ? Icons.visibility_off : Icons.visibility,
+                state.defaultShowPassword
+                    ? Icons.visibility_off
+                    : Icons.visibility,
                 color: ColorManager.grey1,
               ),
               onPressed: () {
                 context.read<ShowPasswordCubit>().togglePasswordVisibility();
               },
-            ): null,
+            )
+                : null,
           ),
         ),
       ),

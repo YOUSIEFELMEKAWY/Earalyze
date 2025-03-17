@@ -1,10 +1,10 @@
 import 'package:earalyze/presentation/onBoarding/widgets/app_logo.dart';
+import 'package:earalyze/presentation/resources/media_query_values.dart';
 import 'package:earalyze/presentation/resources/routes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:earalyze/presentation/onBoarding/widgets/onboarding_items.dart';
 import 'package:earalyze/presentation/resources/color_manager.dart';
-import 'package:earalyze/presentation/resources/values_manager.dart';
 import '../resources/constants_manager.dart';
 import 'cubits/onboarding_cubit.dart';
 import 'cubits/onboarding_states.dart';
@@ -35,7 +35,7 @@ class OnboardingView extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Column(
                   children: [
-                    const SizedBox(height: AppSize.s60),
+                    SizedBox(height: context.height * 0.075),
                     AppLogo(width: width),
                     //onBoarding image
                     Image.asset(controller.items[index].image),

@@ -3,6 +3,7 @@ import 'package:earalyze/presentation/splash/widgets/sliding_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
 import '../../resources/assets_manager.dart';
 import '../../resources/routes_manager.dart';
 
@@ -23,19 +24,48 @@ class _SplashViewBodyState extends State<SplashViewBody>
     super.initState();
 
     initSlidingAnimation();
-    checkOnboardingStatus();
+    checkOnboardingAndAuthStatus(); // Check both onboarding and auth status
   }
 
-  Future<void> checkOnboardingStatus() async {
+  Future<void> checkOnboardingAndAuthStatus() async {
     final prefs = await SharedPreferences.getInstance();
     final onboardingCompleted = prefs.getBool('onboardingCompleted') ?? false;
 
-    if (onboardingCompleted) {
-      navigateToLogin();
-    } else {
+    if (!onboardingCompleted) {
+      // Navigate to onboarding if not completed
       navigateToOnboarding();
+    } else {
+      // Check authentication status if onboarding is completed
+      checkAuthStatus();
     }
   }
+
+  Future<void> checkAuthStatus() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // Check if the user logged in via Facebook or another provider
+      bool isFacebookUser = false;
+
+      for (final provider in user.providerData) {
+        if (provider.providerId == 'facebook.com') {
+          isFacebookUser = true;
+          break;
+        }
+      }
+
+      // For Facebook users, skip email verification check
+      if (isFacebookUser || user.emailVerified) {
+        navigateToHome(user);
+      } else {
+        await FirebaseAuth.instance.signOut();
+        navigateToLogin();
+      }
+    } else {
+      navigateToLogin();
+    }
+  }
+
 
   @override
   void dispose() {
@@ -50,7 +80,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Image(image: AssetImage(ImageAssets.splashLogo)),
-        SidingText(slidingAnimation: slidingAnimation)
+        SidingText(slidingAnimation: slidingAnimation),
       ],
     );
   }
@@ -61,20 +91,30 @@ class _SplashViewBodyState extends State<SplashViewBody>
       duration: const Duration(seconds: 1),
     );
     slidingAnimation =
-        Tween<Offset>(begin: const Offset(0, 10), end: const Offset(0, 9))
+        Tween<Offset>(begin: const Offset(0, 9), end: const Offset(0, 7))
             .animate(animationController);
     animationController.forward();
   }
 
   void navigateToOnboarding() {
     Future.delayed(const Duration(seconds: AppConstants.splashDelay), () {
-      Get.offNamed(Routes.onboardingRoute);
+      Get.offAllNamed(Routes.onboardingRoute);
     });
   }
 
   void navigateToLogin() {
     Future.delayed(const Duration(seconds: AppConstants.splashDelay), () {
-      Get.offNamed(Routes.loginRoute);
+      Get.offAllNamed(Routes.loginRoute);
     });
   }
+
+  void navigateToHome(User user) {
+    Future.delayed(const Duration(seconds: AppConstants.splashDelay), () {
+      Get.offAllNamed(
+        Routes.homeRoute,
+        arguments: user,
+      );
+    });
+  }
+
 }

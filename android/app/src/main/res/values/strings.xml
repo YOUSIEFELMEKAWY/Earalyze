@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Earalyze</string >
+    <string name="facebook_app_id">1810457729795501</string >
+    <string name="fb_login_protocol_scheme">fb04468456ba3958b807a7f6e26b916a</string >
+    <string name="facebook_client_token">ef958890699ef1169976b68120cdc096</string>
+</resources>

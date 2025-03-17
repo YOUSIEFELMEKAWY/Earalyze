@@ -1,11 +1,11 @@
+import 'package:earalyze/presentation/resources/media_query_values.dart';
 import 'package:earalyze/presentation/resources/styles_manager.dart';
 import 'package:earalyze/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
-
 import 'color_manager.dart';
 import 'font_manager.dart';
 
-ThemeData getAppTheme() {
+ThemeData getAppTheme(BuildContext context) {
   return ThemeData(
     //main color
     primaryColor: ColorManager.primary,
@@ -54,25 +54,28 @@ ThemeData getAppTheme() {
     //text theme
 
     textTheme: TextTheme(
-      headlineLarge:
-          getBoldStyle(color: ColorManager.primary, fontSize: FontSize.s22),
-      headlineMedium:
-          getBoldStyle(color: ColorManager.primary, fontSize: FontSize.s17),
-      displayLarge: getRegularStyle(
-          color: ColorManager.primaryDark, fontSize: FontSize.s35),
-      titleMedium:
-          getMediumStyle(color: ColorManager.white, fontSize: FontSize.s16),
-      bodyLarge: getLightStyle(color: ColorManager.white),
-      bodySmall: getRegularStyle(color: ColorManager.black),
-      bodyMedium: getRegularStyle(color: ColorManager.primary),
-      displayMedium:
-          getBoldStyle(color: ColorManager.white, fontSize: FontSize.s18),
-      displaySmall:
-          getRegularStyle(color: ColorManager.white, fontSize: FontSize.s18),
-      headlineSmall: getBoldStyle(color: ColorManager.primary, fontSize: FontSize.s20),
-      labelMedium: getLightStyle(color: ColorManager.primaryDark , fontSize: FontSize.s26)
-    ),
-
+        headlineLarge: getBoldStyle(
+            color: ColorManager.primary, fontSize: context.width * 0.06),
+        headlineMedium:
+            getBoldStyle(color: ColorManager.primary, fontSize: FontSize.s17),
+        displayLarge: getRegularStyle(
+            color: ColorManager.primaryDark, fontSize: context.width * 0.1),
+        titleMedium: getMediumStyle(
+            color: ColorManager.white, fontSize: context.width * 0.05),
+        bodyLarge: getLightStyle(
+            color: ColorManager.white, fontSize: context.width * 0.05),
+        bodySmall: getRegularStyle(
+            color: ColorManager.black, fontSize: context.width * 0.04),
+        bodyMedium: getRegularStyle(
+            color: ColorManager.primary, fontSize: context.width * 0.04),
+        displayMedium:
+            getBoldStyle(color: ColorManager.white, fontSize: FontSize.s18),
+        displaySmall:
+            getRegularStyle(color: ColorManager.white, fontSize: FontSize.s18),
+        headlineSmall: getBoldStyle(
+            color: ColorManager.primary, fontSize: context.width * 0.052),
+        labelMedium: getLightStyle(
+            color: ColorManager.primaryDark, fontSize: context.width * 0.06)),
 
     //input decoration theme(text form field)
 
@@ -82,7 +85,8 @@ ThemeData getAppTheme() {
           getRegularStyle(color: ColorManager.gray, fontSize: AppSize.s14),
       labelStyle:
           getMediumStyle(color: ColorManager.gray, fontSize: AppSize.s14),
-      errorStyle: getRegularStyle(color: ColorManager.error),
+      errorStyle: getRegularStyle(
+          color: ColorManager.error, fontSize: context.width * 0.2),
       //enable border style
       enabledBorder: OutlineInputBorder(
         borderSide:
