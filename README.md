@@ -59,4 +59,9 @@ Earalyze is a smart medical assistant that helps ENT specialists during the pre-
 ---
 
 ## 📸 Screenshots
-<img width="1547" height="3272" alt="Screenshot_20250616_023232" src="https://github.com/user-attachments/assets/efdc2e38-bb96-4517-97fa-77fd77249b95" />
+
+<img width="300" alt="Screenshot_20250616_023609" src="https://github.com/user-attachments/assets/c13ab4f1-d109-43a0-a336-e8b808afc121" />
+<img width="300" alt="Screenshot_20250616_023602" src="https://github.com/user-attachments/assets/84d1a05e-521e-41ba-90ab-c8718eab50a4" />
+<img width="300" alt="Screenshot_20250616_023509" src="https://github.com/user-attachments/assets/5c656b81-ef40-4bc1-9889-a77fcd76fcbe" />
+<img width="300" alt="Screenshot_20250616_023232" src="https://github.com/user-attachments/assets/bd381d66-163a-4f90-bd33-ebe7184975ab" />
+<img width="300" alt="Screenshot_20250616_025844" src="https://github.com/user-attachments/assets/bc863dac-d27a-4bd8-b981-f4a6b724ec0f" />
