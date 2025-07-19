@@ -1,7 +1,8 @@
+import 'package:earalyze/presentation/resources/media_query_values.dart';
 import 'package:flutter/material.dart';
-
+import '../../data/data_source/local/app_preferences.dart';
+import '../../generated/l10n.dart';
 import '../resources/color_manager.dart';
-import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
 
 class OrDivider extends StatelessWidget {
@@ -14,18 +15,26 @@ class OrDivider extends StatelessWidget {
         Expanded(
           child: Divider(
             thickness: AppSize.s3,
-            color: ColorManager.primary,
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.primaryLight
+                : ColorManager.grayLight,
             endIndent: AppSize.s20,
           ),
         ),
-         Text(
-          AppStrings.or,
-          style: Theme.of(context).textTheme.headlineMedium,
+        Text(
+          S.of(context).or,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              fontSize: context.height * 0.015,
+              color: AppPreferences.isDarkMode()
+                  ? ColorManager.primaryDarkLight
+                  : ColorManager.grayLight),
         ),
-         Expanded(
+        Expanded(
           child: Divider(
             thickness: AppSize.s3,
-            color: ColorManager.primary,
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.primaryLight
+                : ColorManager.grayLight,
             indent: AppSize.s20,
           ),
         ),

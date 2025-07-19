@@ -9,11 +9,11 @@ class OnBoardingViewModel extends BaseViewModel
   //stream controller output
   //onboarding viewmodel inputs
 
-  final StreamController _streamController = StreamController<SliderViewObject>();
+  final StreamController _streamController =
+      StreamController<SliderViewObject>();
 
   late final List<SliderObject> _list;
   int _currentIndex = 0;
-
 
   @override
   void dispose() {
@@ -49,7 +49,6 @@ class OnBoardingViewModel extends BaseViewModel
   void onPageChanged(int index) {
     _currentIndex = index;
     _postDataToView();
-
   }
 
   @override
@@ -61,9 +60,9 @@ class OnBoardingViewModel extends BaseViewModel
         (sliderViewObject) => sliderViewObject,
       );
 
-  void _postDataToView()
-  {
-    inputSliderViewObject.add(SliderViewObject(_list[_currentIndex], _list.length, _currentIndex));
+  void _postDataToView() {
+    inputSliderViewObject.add(
+        SliderViewObject(_list[_currentIndex], _list.length, _currentIndex));
   }
 
   //onBoarding private functions

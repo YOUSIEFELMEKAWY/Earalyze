@@ -1,3 +1,4 @@
+import 'package:earalyze/data/data_source/local/app_preferences.dart';
 import 'package:earalyze/presentation/resources/media_query_values.dart';
 import 'package:earalyze/presentation/resources/styles_manager.dart';
 import 'package:earalyze/presentation/resources/values_manager.dart';
@@ -8,16 +9,30 @@ import 'font_manager.dart';
 ThemeData getAppTheme(BuildContext context) {
   return ThemeData(
     //main color
-    primaryColor: ColorManager.primary,
-    primaryColorLight: ColorManager.lightPrimary,
-    primaryColorDark: ColorManager.darkPrimary,
-    disabledColor: ColorManager.grey1,
-    splashColor: ColorManager.lightPrimary,
+    primaryColor: AppPreferences.isDarkMode()
+        ? ColorManager.primaryLight
+        : ColorManager.primaryDarkMode,
+    primaryColorLight: AppPreferences.isDarkMode()
+        ? ColorManager.lightPrimaryLight
+        : ColorManager.lightPrimaryDarkMode,
+    primaryColorDark: AppPreferences.isDarkMode()
+        ? ColorManager.darkPrimaryLight
+        : ColorManager.darkPrimaryDarkMode,
+    disabledColor: AppPreferences.isDarkMode()
+        ? ColorManager.grey1Light
+        : ColorManager.grey1DarkMode,
+    splashColor: AppPreferences.isDarkMode()
+        ? ColorManager.lightPrimaryLight
+        : ColorManager.lightPrimaryDarkMode,
 
     //card view theme
     cardTheme: CardTheme(
-      color: ColorManager.white,
-      shadowColor: ColorManager.gray,
+      color: AppPreferences.isDarkMode()
+          ? ColorManager.whiteLight
+          : ColorManager.whiteDarkMode,
+      shadowColor: AppPreferences.isDarkMode()
+          ? ColorManager.grayLight
+          : ColorManager.grayDarkMode,
       elevation: AppSize.s4,
     ),
 
@@ -25,25 +40,40 @@ ThemeData getAppTheme(BuildContext context) {
 
     appBarTheme: AppBarTheme(
         centerTitle: true,
-        color: ColorManager.primary,
+        color: AppPreferences.isDarkMode()
+            ? ColorManager.primaryLight
+            : ColorManager.primaryDarkMode,
         elevation: AppSize.s4,
-        shadowColor: ColorManager.lightPrimary,
-        titleTextStyle:
-            getRegularStyle(fontSize: AppSize.s16, color: ColorManager.white)),
+        shadowColor: AppPreferences.isDarkMode()
+            ? ColorManager.lightPrimaryLight
+            : ColorManager.lightPrimaryDarkMode,
+        titleTextStyle: getRegularStyle(
+            fontSize: AppSize.s16,
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.whiteLight
+                : ColorManager.whiteDarkMode)),
 
     //button theme
 
     buttonTheme: ButtonThemeData(
         shape: const StadiumBorder(),
-        disabledColor: ColorManager.grey1,
-        buttonColor: ColorManager.primary,
-        splashColor: ColorManager.lightPrimary),
+        disabledColor: AppPreferences.isDarkMode()
+            ? ColorManager.grey1Light
+            : ColorManager.grey1DarkMode,
+        buttonColor: AppPreferences.isDarkMode()
+            ? ColorManager.primaryLight
+            : ColorManager.primaryDarkMode,
+        splashColor: AppPreferences.isDarkMode()
+            ? ColorManager.lightPrimaryLight
+            : ColorManager.lightPrimaryDarkMode),
 
     //elevated button
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
       textStyle: getRegularStyle(
-        color: ColorManager.white,
+        color: AppPreferences.isDarkMode()
+            ? ColorManager.whiteLight
+            : ColorManager.whiteDarkMode,
         fontSize: AppSize.s17,
       ),
       shape: RoundedRectangleBorder(
@@ -55,53 +85,106 @@ ThemeData getAppTheme(BuildContext context) {
 
     textTheme: TextTheme(
         headlineLarge: getBoldStyle(
-            color: ColorManager.primary, fontSize: context.width * 0.06),
-        headlineMedium:
-            getBoldStyle(color: ColorManager.primary, fontSize: FontSize.s17),
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.primaryLight
+                : ColorManager.primaryDarkMode,
+            fontSize: context.width * 0.06),
+        headlineMedium: getBoldStyle(
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.primaryLight
+                : ColorManager.primaryDarkMode,
+            fontSize: FontSize.s17),
         displayLarge: getRegularStyle(
-            color: ColorManager.primaryDark, fontSize: context.width * 0.1),
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.primaryDarkLight
+                : ColorManager.primaryDarkDarkMode,
+            fontSize: context.width * 0.1),
         titleMedium: getMediumStyle(
-            color: ColorManager.white, fontSize: context.width * 0.05),
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.whiteLight
+                : ColorManager.whiteDarkMode,
+            fontSize: context.width * 0.05),
         bodyLarge: getLightStyle(
-            color: ColorManager.white, fontSize: context.width * 0.05),
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.whiteLight
+                : ColorManager.whiteDarkMode,
+            fontSize: context.width * 0.05),
         bodySmall: getRegularStyle(
-            color: ColorManager.black, fontSize: context.width * 0.04),
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.blackLight
+                : ColorManager.blackDarkMode,
+            fontSize: context.width * 0.04),
         bodyMedium: getRegularStyle(
-            color: ColorManager.primary, fontSize: context.width * 0.04),
-        displayMedium:
-            getBoldStyle(color: ColorManager.white, fontSize: FontSize.s18),
-        displaySmall:
-            getRegularStyle(color: ColorManager.white, fontSize: FontSize.s18),
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.primaryLight
+                : ColorManager.primaryDarkMode,
+            fontSize: context.width * 0.04),
+        displayMedium: getBoldStyle(
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.whiteLight
+                : ColorManager.whiteDarkMode,
+            fontSize: FontSize.s18),
+        displaySmall: getRegularStyle(
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.whiteLight
+                : ColorManager.whiteDarkMode,
+            fontSize: FontSize.s18),
         headlineSmall: getBoldStyle(
-            color: ColorManager.primary, fontSize: context.width * 0.052),
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.primaryLight
+                : ColorManager.primaryDarkMode,
+            fontSize: context.width * 0.052),
         labelMedium: getLightStyle(
-            color: ColorManager.primaryDark, fontSize: context.width * 0.06)),
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.primaryDarkLight
+                : ColorManager.primaryDarkDarkMode,
+            fontSize: context.width * 0.06)),
 
     //input decoration theme(text form field)
 
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.all(AppPadding.p8),
-      hintStyle:
-          getRegularStyle(color: ColorManager.gray, fontSize: AppSize.s14),
-      labelStyle:
-          getMediumStyle(color: ColorManager.gray, fontSize: AppSize.s14),
+      hintStyle: getRegularStyle(
+          color: AppPreferences.isDarkMode()
+              ? ColorManager.grayLight
+              : ColorManager.grayDarkMode,
+          fontSize: AppSize.s14),
+      labelStyle: getMediumStyle(
+          color: AppPreferences.isDarkMode()
+              ? ColorManager.grayLight
+              : ColorManager.grayDarkMode,
+          fontSize: AppSize.s14),
       errorStyle: getRegularStyle(
-          color: ColorManager.error, fontSize: context.width * 0.2),
+          color: AppPreferences.isDarkMode()
+              ? ColorManager.errorLight
+              : ColorManager.errorDarkMode,
+          fontSize: context.width * 0.2),
       //enable border style
       enabledBorder: OutlineInputBorder(
-        borderSide:
-            BorderSide(color: ColorManager.primary, width: AppSize.s1_5),
+        borderSide: BorderSide(
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.primaryLight
+                : ColorManager.primaryDarkMode,
+            width: AppSize.s1_5),
         borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
 
       //focus border style
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ColorManager.gray, width: AppSize.s1_5),
+        borderSide: BorderSide(
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.grayLight
+                : ColorManager.grayDarkMode,
+            width: AppSize.s1_5),
         borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
       //error border style
       errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ColorManager.error, width: AppSize.s1_5),
+        borderSide: BorderSide(
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.errorLight
+                : ColorManager.errorDarkMode,
+            width: AppSize.s1_5),
         borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
     ),

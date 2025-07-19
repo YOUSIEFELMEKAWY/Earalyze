@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import '../../../data/data_source/local/app_preferences.dart';
 import '../../../domain/models.dart';
+import '../../../generated/l10n.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/constants_manager.dart';
 import '../../resources/routes_manager.dart';
-import '../../resources/strings_manager.dart';
 import '../../resources/values_manager.dart';
 import '../viewmodel/onboarding_viewmodel.dart';
 
@@ -45,12 +45,18 @@ class _OnboardingView1State extends State<OnboardingView1> {
       return Container();
     } else {
       return Scaffold(
-        backgroundColor: ColorManager.white,
+        backgroundColor: AppPreferences.isDarkMode()
+            ? ColorManager.whiteLight
+            : ColorManager.whiteDarkMode,
         appBar: AppBar(
-          backgroundColor: ColorManager.white,
+          backgroundColor: AppPreferences.isDarkMode()
+              ? ColorManager.whiteLight
+              : ColorManager.whiteDarkMode,
           elevation: AppSize.s0,
           systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: ColorManager.white,
+              statusBarColor: AppPreferences.isDarkMode()
+                  ? ColorManager.whiteLight
+                  : ColorManager.whiteDarkMode,
               statusBarBrightness: Brightness.light,
               statusBarIconBrightness: Brightness.dark),
         ),
@@ -65,7 +71,7 @@ class _OnboardingView1State extends State<OnboardingView1> {
           },
         ),
         bottomSheet: Container(
-          color: ColorManager.white,
+          color: Colors.white,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -76,7 +82,7 @@ class _OnboardingView1State extends State<OnboardingView1> {
                     Navigator.pushReplacementNamed(context, Routes.loginRoute);
                   },
                   child: Text(
-                    AppStrings.skip,
+                    S.of(context).skip,
                     style: Theme.of(context).textTheme.titleMedium,
                     textAlign: TextAlign.end,
                   ),
@@ -92,9 +98,8 @@ class _OnboardingView1State extends State<OnboardingView1> {
 
   Widget _getBottomSheetWidget(SliderViewObject sliderViewObject) {
     return Container(
-
       decoration: BoxDecoration(
-          color: ColorManager.primary,
+          color: ColorManager.primaryLight,
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       child: Row(

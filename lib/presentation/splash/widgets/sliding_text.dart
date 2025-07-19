@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../resources/strings_manager.dart';
+import '../../../data/data_source/local/app_preferences.dart';
+import '../../../generated/l10n.dart';
+import '../../resources/color_manager.dart';
 
 class SidingText extends StatelessWidget {
   const SidingText({
@@ -14,12 +15,15 @@ class SidingText extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: slidingAnimation,
-      builder: (context, child) =>  SlideTransition(
+      builder: (context, child) => SlideTransition(
         position: slidingAnimation,
         child: Center(
           child: Text(
-            AppStrings.appDesc,
-            style: Theme.of(context).textTheme.bodyLarge,
+            S.of(context).appDesc,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: AppPreferences.isDarkMode()
+                    ? ColorManager.whiteLight
+                    : ColorManager.whiteLight),
           ),
         ),
       ),

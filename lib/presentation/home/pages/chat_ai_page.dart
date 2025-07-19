@@ -12,15 +12,11 @@ class ChatAiPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ChatAiCubit(user: user),
-      child: BlocBuilder<ChatAiCubit, ChatAiStates>(
-        builder: (context, state) {
-          final chatAiCubit = context.read<ChatAiCubit>();
-          return CustomDashChat(chatAiCubit: chatAiCubit);
-        },
-      ),
+    return BlocBuilder<ChatAiCubit, ChatAiStates>(
+      builder: (context, state) {
+        final chatAiCubit = context.read<ChatAiCubit>();
+        return CustomDashChat(chatAiCubit: chatAiCubit);
+      },
     );
   }
 }
-

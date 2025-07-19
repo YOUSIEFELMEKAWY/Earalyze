@@ -1,5 +1,6 @@
 import 'package:earalyze/presentation/splash/widgets/splash_view_body.dart';
 import 'package:flutter/material.dart';
+import '../../data/data_source/local/app_preferences.dart';
 import '../resources/color_manager.dart';
 
 class SplashView extends StatelessWidget {
@@ -7,9 +8,10 @@ class SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: ColorManager.primary,
+      backgroundColor: AppPreferences.isDarkMode()
+          ? ColorManager.primaryLight
+          : ColorManager.primaryDarkMode,
       body: const SplashViewBody(),
     );
   }

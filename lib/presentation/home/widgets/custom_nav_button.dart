@@ -1,7 +1,8 @@
-import 'package:earalyze/app/app.dart';
 import 'package:earalyze/presentation/resources/color_manager.dart';
 import 'package:earalyze/presentation/resources/media_query_values.dart';
 import 'package:flutter/material.dart';
+
+import '../../../data/data_source/local/app_preferences.dart';
 
 class CustomNavButton extends StatelessWidget {
   final IconData icon;
@@ -21,9 +22,16 @@ class CustomNavButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        backgroundColor: ColorManager.primary,
+        backgroundColor: AppPreferences.isDarkMode()
+            ? ColorManager.primaryLight
+            : ColorManager.primaryLight,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: AppPreferences.isDarkMode()
+                ? ColorManager.primaryDarkLight
+                : ColorManager.whiteLight,
+          ),
         ),
         elevation: 4,
       ),
@@ -33,11 +41,19 @@ class CustomNavButton extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 18, color: ColorManager.white),
+            Icon(icon,
+                size: 18,
+                color: AppPreferences.isDarkMode()
+                    ? ColorManager.whiteLight
+                    : ColorManager.whiteDarkMode),
             SizedBox(height: context.height * 0.005),
             Text(
               label,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: context.width * 0.039),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontSize: context.width * 0.034,
+                  color: AppPreferences.isDarkMode()
+                      ? ColorManager.whiteLight
+                      : ColorManager.whiteLight),
             ),
           ],
         ),

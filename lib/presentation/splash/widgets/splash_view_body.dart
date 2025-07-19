@@ -66,7 +66,6 @@ class _SplashViewBodyState extends State<SplashViewBody>
     }
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -91,7 +90,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
       duration: const Duration(seconds: 1),
     );
     slidingAnimation =
-        Tween<Offset>(begin: const Offset(0, 9), end: const Offset(0, 7))
+        Tween<Offset>(begin: const Offset(0, 10), end: const Offset(0, 7))
             .animate(animationController);
     animationController.forward();
   }
@@ -116,5 +115,4 @@ class _SplashViewBodyState extends State<SplashViewBody>
       );
     });
   }
-
 }

@@ -15,7 +15,7 @@ class LoginCubit extends Cubit<LoginStates> {
       await FirebaseServices().signInUser(context, email, password);
       emit(LoginSuccess());
       isLoading = false;
-    } on Exception  {
+    } on Exception {
       emit(LoginFailure());
       isLoading = false;
     }

@@ -1,20 +1,28 @@
-import 'package:earalyze/domain/models.dart';
 import 'package:earalyze/presentation/resources/assets_manager.dart';
-import 'package:earalyze/presentation/resources/strings_manager.dart';
+import '../../../generated/l10n.dart';
+
+class OnBoardingInfo {
+  final String title;
+  final String description;
+  final String image;
+
+  OnBoardingInfo(
+      {required this.title, required this.description, required this.image});
+}
 
 class OnBoardingItems {
-  List<OnBoardingInfo> items = [
-    OnBoardingInfo(
-        title: AppStrings.onboardingTitle1,
-        description: AppStrings.onboardingSubTitle1,
-        image: ImageAssets.onboardingLogo1),
-    OnBoardingInfo(
-        title: AppStrings.onboardingTitle2,
-        description: AppStrings.onboardingSubTitle2,
-        image: ImageAssets.onboardingLogo2),
-    OnBoardingInfo(
-        title: AppStrings.onboardingTitle3,
-        description: AppStrings.onboardingSubTitle3,
-        image: ImageAssets.onboardingLogo3),
-  ];
+  List<OnBoardingInfo> get items => [
+        OnBoardingInfo(
+            title: S.current.onboardingTitle1,
+            description: S.current.onboardingSubTitle1,
+            image: ImageAssets.onboardingAni1),
+        OnBoardingInfo(
+            title: S.current.onboardingTitle2,
+            description: S.current.onboardingSubTitle2,
+            image: ImageAssets.onboardingAni2),
+        OnBoardingInfo(
+            title: S.current.onboardingTitle3,
+            description: S.current.onboardingSubTitle3,
+            image: ImageAssets.onboardingAni3),
+      ];
 }

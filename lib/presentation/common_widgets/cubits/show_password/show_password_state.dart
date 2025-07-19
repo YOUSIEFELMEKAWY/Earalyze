@@ -1,5 +1,5 @@
 class ShowPasswordState {
-   final bool defaultShowPassword;
+  final bool defaultShowPassword;
 
-   ShowPasswordState({required this.defaultShowPassword});
+  ShowPasswordState({required this.defaultShowPassword});
 }

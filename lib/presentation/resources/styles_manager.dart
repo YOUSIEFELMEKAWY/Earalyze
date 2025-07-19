@@ -11,26 +11,22 @@ TextStyle _getTextStyle(double fontSize, FontWeight fontWeight, Color color) {
 }
 
 //regular style
-TextStyle getRegularStyle(
-    {required double fontSize, required Color color}) {
+TextStyle getRegularStyle({required double fontSize, required Color color}) {
   return _getTextStyle(fontSize, FontWeightManager.regular, color);
 }
 
 //medium style
-TextStyle getMediumStyle(
-    {required double fontSize, required Color color}) {
+TextStyle getMediumStyle({required double fontSize, required Color color}) {
   return _getTextStyle(fontSize, FontWeightManager.medium, color);
 }
 
 //light style
-TextStyle getLightStyle(
-    {required double fontSize, required Color color}) {
+TextStyle getLightStyle({required double fontSize, required Color color}) {
   return _getTextStyle(fontSize, FontWeightManager.light, color);
 }
 
 //semiBold style
-TextStyle getSemiBoldStyle(
-    {required double fontSize, required Color color}) {
+TextStyle getSemiBoldStyle({required double fontSize, required Color color}) {
   return _getTextStyle(fontSize, FontWeightManager.semiBold, color);
 }
 

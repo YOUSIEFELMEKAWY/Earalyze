@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -11,7 +12,8 @@ class FirebaseServices {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // Sign up with email and password
-  Future<void> signupUser(context, String email, String password) async {
+  Future<void> signupUser(context, String email, String password,
+      String firstName, String lastName) async {
     try {
       UserCredential user = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -26,6 +28,17 @@ class FirebaseServices {
         backgroundColor: Colors.lightGreen,
         icon: Icons.check,
       );
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.user?.uid)
+          .set({
+        'first_name': firstName,
+        'last_name': lastName,
+        'email': email,
+        'created_at': FieldValue.serverTimestamp(),
+        // Add any additional user fields you need
+      });
 
       // Navigate to login screen after successful sign-up
       Get.offNamed(Routes.loginRoute);
@@ -44,7 +57,8 @@ class FirebaseServices {
           customSnackBar(context, "Email/password accounts are not enabled.");
           break;
         default:
-          customSnackBar(context, "An unknown Firebase error occurred: ${ex.message}");
+          customSnackBar(
+              context, "An unknown Firebase error occurred: ${ex.message}");
       }
     } on FirebaseException catch (ex) {
       customSnackBar(context, "Firebase error: ${ex.message}");
@@ -68,7 +82,8 @@ class FirebaseServices {
           backgroundColor: Colors.lightGreen,
           icon: Icons.check,
         );
-        Get.offNamed(Routes.homeRoute,arguments: userCredential.user); // Navigate to home screen
+        Get.offNamed(Routes.homeRoute,
+            arguments: userCredential.user); // Navigate to home screen
       } else {
         await _auth.signOut();
         customSnackBar(
@@ -104,7 +119,8 @@ class FirebaseServices {
           customSnackBar(context, "Too many requests. Try again later.");
           break;
         default:
-          customSnackBar(context, "An unknown Firebase error occurred: ${ex.message}");
+          customSnackBar(
+              context, "An unknown Firebase error occurred: ${ex.message}");
       }
     } on FirebaseException catch (ex) {
       customSnackBar(context, "Firebase error: ${ex.message}");
@@ -128,21 +144,24 @@ class FirebaseServices {
         return;
       }
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      final UserCredential userCredential = await _auth.signInWithCredential(credential);
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
       customSnackBar(
         context,
         "Signed in with Google: ${userCredential.user!.email}",
         backgroundColor: Colors.lightGreen,
         icon: Icons.check,
       );
-      Get.offNamed(Routes.homeRoute,arguments: userCredential.user); // Navigate to home screen
+      Get.offNamed(Routes.homeRoute,
+          arguments: userCredential.user); // Navigate to home screen
     } on FirebaseAuthException catch (ex) {
       customSnackBar(
         context,
@@ -176,17 +195,18 @@ class FirebaseServices {
       }
 
       final OAuthCredential facebookAuthCredential =
-      FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+          FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
 
       final UserCredential userCredential =
-      await _auth.signInWithCredential(facebookAuthCredential);
+          await _auth.signInWithCredential(facebookAuthCredential);
       customSnackBar(
         context,
         "Signed in with Facebook",
         backgroundColor: Colors.lightGreen,
         icon: Icons.check,
       );
-      Get.offNamed(Routes.homeRoute,arguments: userCredential.user); // Navigate to home screen
+      Get.offNamed(Routes.homeRoute,
+          arguments: userCredential.user); // Navigate to home screen
     } catch (e) {
       customSnackBar(
         context,
@@ -196,6 +216,7 @@ class FirebaseServices {
       );
     }
   }
+
   // logout
   Future<void> logOut(context) async {
     await FirebaseAuth.instance.signOut();
@@ -205,7 +226,81 @@ class FirebaseServices {
       backgroundColor: Colors.lightGreen,
       icon: Icons.check,
     );
-    Get.offNamed(Routes.loginRoute); // Navigate to home screen
+    Get.offNamed(Routes.loginRoute);
   }
 
+//send Password Reset Email
+  Future<void> sendPasswordResetEmail(context, String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      customSnackBar(
+        context,
+        'Success, Password reset email sent to $email',
+        backgroundColor: Colors.lightGreen,
+        icon: Icons.check,
+      );
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+      switch (e.code) {
+        case 'invalid-email':
+          errorMessage = 'The email address is invalid.';
+          break;
+        case 'user-not-found':
+          errorMessage = 'No user found with this email address.';
+          break;
+        default:
+          errorMessage = 'An error occurred. Please try again.';
+      }
+      customSnackBar(
+        context,
+        'Error $errorMessage',
+        backgroundColor: Colors.red,
+        icon: Icons.error,
+      );
+    } catch (e) {
+      customSnackBar(
+        context,
+        'Error An unexpected error occurred',
+        backgroundColor: Colors.red,
+        icon: Icons.error,
+      );
+    }
+  }
+
+  Future<void> deleteAccount(BuildContext context, User user) async {
+    try {
+      await user.delete();
+
+      customSnackBar(
+        context,
+        "Account deleted successfully",
+        backgroundColor: Colors.lightGreen,
+        icon: Icons.check,
+      );
+      Get.offAllNamed(Routes.loginRoute);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        customSnackBar(
+          context,
+          "Please re-authenticate to delete your account.",
+          backgroundColor: Colors.red,
+          icon: Icons.error,
+        );
+      } else {
+        customSnackBar(
+          context,
+          "Error: ${e.message}",
+          backgroundColor: Colors.red,
+          icon: Icons.error,
+        );
+      }
+    } catch (e) {
+      customSnackBar(
+        context,
+        "Unexpected error: $e",
+        backgroundColor: Colors.red,
+        icon: Icons.error,
+      );
+    }
+  }
 }

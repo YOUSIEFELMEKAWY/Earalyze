@@ -1,3 +1,4 @@
+import 'package:earalyze/presentation/forget_password/forget_password.dart';
 import 'package:earalyze/presentation/home/home_view.dart';
 import 'package:earalyze/presentation/resources/constants_manager.dart';
 import 'package:earalyze/presentation/resources/strings_manager.dart';
@@ -16,6 +17,7 @@ class Routes {
   static const String onboardingRoute = '/onboarding';
   static const String mainRoute = '/main';
   static const String homeRoute = '/home';
+  static const String forgetPasswordRoute = '/forgetPassword';
 }
 
 class RouteGenerator {
@@ -48,9 +50,16 @@ class RouteGenerator {
     GetPage(
       name: Routes.homeRoute,
       page: () => const HomeView(),
-      transition: Transition.leftToRight,
+      transition: Transition.cupertino,
       transitionDuration:
-      const Duration(milliseconds: AppConstants.transitionDuration),
+          const Duration(milliseconds: AppConstants.transitionDuration),
+    ),
+    GetPage(
+      name: Routes.forgetPasswordRoute,
+      page: () => const ForgetPasswordView(),
+      transition: Transition.cupertino,
+      transitionDuration:
+          const Duration(milliseconds: AppConstants.transitionDuration),
     ),
   ];
 }

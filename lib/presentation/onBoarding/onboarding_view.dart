@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:earalyze/presentation/onBoarding/widgets/onboarding_items.dart';
 import 'package:earalyze/presentation/resources/color_manager.dart';
+import 'package:lottie/lottie.dart';
+import '../../data/data_source/local/app_preferences.dart';
 import '../resources/constants_manager.dart';
 import 'cubits/onboarding_cubit.dart';
 import 'cubits/onboarding_states.dart';
@@ -27,18 +29,26 @@ class OnboardingView extends StatelessWidget {
               state.currentPageIndex == controller.items.length - 1;
 
           return Scaffold(
-            backgroundColor: ColorManager.white,
+            backgroundColor: AppPreferences.isDarkMode()
+                ? ColorManager.whiteLight
+                : ColorManager.whiteDarkMode,
             body: PageView.builder(
               onPageChanged: (index) => onboardingCubit.updatePageIndex(index),
               itemCount: controller.items.length,
               controller: onboardingCubit.pageController,
               itemBuilder: (context, index) {
+                final item = controller.items[index];
                 return Column(
                   children: [
                     SizedBox(height: context.height * 0.075),
                     AppLogo(width: width),
-                    //onBoarding image
-                    Image.asset(controller.items[index].image),
+                    // Onboarding image
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Lottie.asset(item.image,
+                          width: context.width * 0.9,
+                          height: context.height * 0.41),
+                    ),
                     const Spacer(),
                     OnboardingFooter(
                       pageController: onboardingCubit.pageController,
@@ -66,8 +76,8 @@ class OnboardingView extends StatelessWidget {
                           );
                         }
                       },
-                      title: controller.items[index].title,
-                      description: controller.items[index].description,
+                      title: item.title,
+                      description: item.description,
                     ),
                   ],
                 );

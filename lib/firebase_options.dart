@@ -85,5 +85,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'earalyze.firebasestorage.app',
     measurementId: 'G-0WQNZNH8BX',
   );
-
 }
