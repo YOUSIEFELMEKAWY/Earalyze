@@ -20,7 +20,7 @@ Earalyze is a smart medical assistant that helps ENT specialists during the pre-
 - Integrated with **Firebase Authentication & Storage**.
 - Includes user-friendly **Onboarding**, **Login**, and **Signup**.
 - Features a **Chatbot assistant** for guidance.
-- Calls the AI model through a backend **Flask API**.
+- Calls the AI model through a backend **Fast API**.
 
 ---
 
